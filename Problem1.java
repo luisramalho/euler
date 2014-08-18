@@ -13,9 +13,10 @@ public class Problem1 {
     int sum = 0;
     int MAX = 1000;
 
-    for (int i = 1; i < MAX; i++) {
-      if (i % 3 == 0 || i % 5 == 0)
+    for (int i = 0; i < MAX; i++) {
+      if (i % 3 == 0 || i % 5 == 0) {
         sum += i;
+      }
     }
 
     System.out.println(sum);
