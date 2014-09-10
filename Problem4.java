@@ -11,7 +11,7 @@ public class Problem4 {
   public static void main(String[] args) {
     System.out.println(largestPalindromeFromDigits(3));
   }
-  
+
   public static int largestPalindromeFromDigits(int digits) {
     int productOfDigits, largestPalindrome = 0;
     int largestNumber = largestNumberFromDigits(digits);
@@ -19,7 +19,8 @@ public class Problem4 {
     for (int i = largestNumber; i > smallestNumber; i--) {
       for (int j = largestNumber; j > smallestNumber; j--) {
         productOfDigits = i * j;
-        if (isPalindrome(productOfDigits) && productOfDigits > largestPalindrome) {
+        if (isPalindrome(productOfDigits)
+            && productOfDigits > largestPalindrome) {
           largestPalindrome = productOfDigits;
         }
       }
@@ -30,7 +31,7 @@ public class Problem4 {
   private static int largestNumberFromDigits(int digits) {
     StringBuilder sb = new StringBuilder();
     int largestNumber = 0;
-    for (int i = 0; i < digits; ++i ) {
+    for (int i = 0; i < digits; ++i) {
       sb.append("9");
     }
     largestNumber = Integer.valueOf(sb.toString());
@@ -43,7 +44,7 @@ public class Problem4 {
 
   private static boolean isPalindrome(int product) {
     String str = String.valueOf(product);
-    for (int i = 0; i < str.length()/2; i++) {
+    for (int i = 0; i < str.length() / 2; i++) {
       if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
         return false;
       }
