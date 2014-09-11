@@ -32,18 +32,15 @@ public final class Problem6 {
    * @param args Arguments.
    */
   public static void main(final String[] args) {
-    int sumOfSquares = 0;
-    int squareOfSum = 0;
-    for (int i = 1; i <= UP_LIMIT; i++) {
-      sumOfSquares += i * i;
-      squareOfSum += i;
-    }
+    // sum(n) = n(n + 1)/2
+    int sum = (UP_LIMIT * (UP_LIMIT + 1)) / 2;
     
-    squareOfSum *= squareOfSum;
+    // sum sq = (2n + 1)(n + 1)n/6
+    int sumSquares = ((2 * UP_LIMIT + 1) * (UP_LIMIT + 1) * UP_LIMIT) / 6;
     
-    System.out.println(squareOfSum - sumOfSquares);
+    double squareSum = Math.pow(sum, 2);
+    
+    System.out.println((int) squareSum - sumSquares);
   }
-  
-  
 
 }
