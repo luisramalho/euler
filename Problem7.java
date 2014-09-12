@@ -25,31 +25,18 @@ public final class Problem7 {
    * Main method.
    * @param args Arguments.
    */
-  public static void main(final String[] args) {
-    int[] primeNumbers = primeNumbers(NUMBER_OF_PRIMES);
-    int lastPrime = primeNumbers[NUMBER_OF_PRIMES - 1];
-    System.out.println(lastPrime);
-  }
-
-  /**
-   * Computes n prime numbers.
-   * @param n   Number of prime numbers.
-   * @return    ArrayList of prime numbers.
-   */
-  private static int[] primeNumbers(final int n) {
-    int[] primes = new int[n];
+  public static void main(final String[] args) {  
+    int count = 1; // 2 is the first prime
+    int candidate = 1;
     
-    int i = 0;
-    int count = 0;
-    while (count < n) {
-      if (isPrime(i)) {
-        primes[count] = i;
+    do {
+      candidate += 2;
+      if (isPrime(candidate)) {
         count++;
       }
-      i++;
-    }
-
-    return primes;
+    } while (count != NUMBER_OF_PRIMES);
+    
+    System.out.println(candidate);
   }
   
   /**
@@ -58,19 +45,40 @@ public final class Problem7 {
    * @return   <code>true</code> if the number is prime;
    *           <code>false</code> otherwise.
    */
-  private static boolean isPrime(final int n) {
-    if (n < 2) {
+  private static boolean isPrime(final int n) {    
+    if (n == 1) {
       return false;
     }
     
-    if (n == 2) {
+    if (n < 4) {
       return true;
     }
     
-    for (int i = 2; i < Math.sqrt(n) + 1; i++) {
-      if (n % i == 0) {
+    if (n % 2 == 0) {
+      return false;
+    }
+    
+    if (n < 9) {
+      return true;
+    }
+    
+    if (n % 3 == 0) {
+      return false;
+    }
+    
+    double r = Math.floor(Math.sqrt(n));
+    int f = 5;
+    
+    while (f <= r) {
+      if (n % f == 0) {
         return false;
       }
+      
+      if (n % (f + 2) == 0) {
+        return false;
+      }
+      
+      f += 6;
     }
 
     return true;
