@@ -18,10 +18,15 @@ public final class Problem010 {
     static final int LIMIT = 2_000_000;
 
     /**
+     * Sieve size without even numbers.
+     */
+    static final int SIEVE_BOUND = (LIMIT - 1) / 2;
+
+    /**
      * Cross limit, because any smaller multiple of a next number p that has a
      * divisor less than p has already been crossed out as a multiple of that.
      */
-    static final double CROSS_LIMIT = Math.sqrt(LIMIT);
+    static final double CROSS_LIMIT = (Math.sqrt(LIMIT) - 1) / 2;
 
     /**
      * Private constructor.
@@ -36,26 +41,22 @@ public final class Problem010 {
      *            Arguments.
      */
     public static void main(final String[] args) {
-        boolean[] sieve = new boolean[LIMIT];
+        boolean[] sieve = new boolean[SIEVE_BOUND];
         Arrays.fill(sieve, false);
 
-        for (int i = 4; i < LIMIT; i += 2) {
-            sieve[i] = true;
-        }
-
-        for (int i = 3; i < CROSS_LIMIT; i += 2) {
-            if (!sieve[i]) {
-                for (int j = i * i; j < LIMIT; j += 2 * i) {
+        for (int i = 1; i < CROSS_LIMIT; i++) {
+            if (!sieve[i]) { // 2 * i + 1 is prime, mark multiples
+                for (int j = 2 * i * (i + 1); j < SIEVE_BOUND; j += 2 * i + 1) {
                     sieve[j] = true;
                 }
             }
         }
 
-        long sum = 0;
+        long sum = 2; // 2 is prime
 
-        for (int i = 2; i < LIMIT; i++) {
+        for (int i = 1; i < SIEVE_BOUND; i++) {
             if (!sieve[i]) {
-                sum += i;
+                sum += 2 * i + 1;
             }
         }
 
