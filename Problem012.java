@@ -16,7 +16,7 @@ public final class Problem012 {
     /**
      * Primes.
      */
-    static final int P = 10000;
+    static final int P = 1000;
 
     /**
      * Private constructor.
@@ -32,36 +32,40 @@ public final class Problem012 {
      *            Arguments.
      */
     public static void main(final String[] args) {
-        int t = 1;
-        int a = 1;
+        int n = 3;
+        int dn = 2;
         int count = 0;
-        int tt, i, exponent;
+        int n1, dn1, i, exponent;
         int[] primes = primes(P);
         while (count <= LIMIT) {
-            count = 1;
-            a += 1;
-            t += a;
-            tt = t;
+            n += 1;
+            n1 = n;
+            if (n1 % 2 == 0) {
+                n1 /= 2;
+            }
+            dn1 = 1;
             for (i = 1; i <= P; i++) {
-                if (primes[i] * primes[i] > tt) {
-                    count *= 2;
+                if (primes[i] * primes[i] > n1) {
+                    dn1 *= 2;
                     break;
                 }
 
                 exponent = 1;
-                while (tt % primes[i] == 0) {
+                while (n1 % primes[i] == 0) {
                     exponent++;
-                    tt /= primes[i];
+                    n1 /= primes[i];
                 }
                 if (exponent > 1) {
-                    count *= exponent;
+                    dn1 *= exponent;
                 }
-                if (tt == 1) {
+                if (n1 == 1) {
                     break;
                 }
             }
+            count = dn * dn1;
+            dn = dn1;
         }
-        System.out.println(t);
+        System.out.println(n * (n - 1) / 2);
     }
 
     /**
