@@ -27,43 +27,26 @@ public final class Problem012 {
      *            Arguments.
      */
     public static void main(final String[] args) {
-        int triangleNumber = 0;
-        int factors = 0;
-        int i = 1;
-        while (factors <= LIMIT) {
-            triangleNumber = triangleNumber(i);
-            factors = factorsCount(triangleNumber);
-            i++;
-        }
-        System.out.println(i);
-    }
+        int t = 1;
+        int a = 1;
+        int count = 0;
+        while (count <= LIMIT) {
+            count = 0;
+            a += 1;
+            t += a;
+            int ttx = (int) Math.sqrt(t);
+            for (int i = 1; i <= ttx; i++) {
+                if (t % i == 0) {
+                    count += 2;
+                }
 
-    /**
-     * Calculates triangle numbers.
-     *
-     * @param n
-     *            triangle number to be found.
-     * @return triangle number.
-     */
-    private static int triangleNumber(final int n) {
-        return (n * (n + 1)) / 2;
-    }
-
-    /**
-     * Computes the number of factors.
-     *
-     * @param n
-     *            number to be checked for factors.
-     * @return number of factors.
-     */
-    private static int factorsCount(final long n) {
-        int count = 2; // 1 and itself
-        for (long i = 2; i <= n / 2; i++) {
-            if (n % i == 0) {
-                count++;
+                // correction for a perfect square
+                if (t == ttx * ttx) {
+                    count--;
+                }
             }
         }
-        return count;
+        System.out.println(t);
     }
 
 }
