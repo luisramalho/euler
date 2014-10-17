@@ -34,36 +34,48 @@ import java.util.Set;
 public class Problem032 {
 
     public int solve() {
-        int count = 0;
+        int product;
         StringBuilder s = new StringBuilder("");
         Set<Integer> products = new HashSet<>();
-        for (int i = 1; i < 10_000; i++) {
-            for (int j = 1; j < 10_000; j++) {
-                s.append(i).append(j);
-                s.append(i * j);
-                if (s.length() == 9 && isPandigital(s.toString())) {
-                    products.add(i * j);
+        for (int i = 4; i < 50; i++) {
+            for (int j = 100 + i; j < 8000 / i; j++) {
+                product = i * j;
+                s.append(i).append(j).append(product);
+                if (s.length() == 9) {
+                    if (isPandigital(Integer.parseInt(s.toString()))) {
+                        products.add(product);
+                    }
                 }
                 s.setLength(0);
             }
         }
-        return products.stream().map((i) -> i).reduce(count, Integer::sum);
+        
+        int count = 0;
+        for (Integer i : products) {
+            count += i;
+        }
+
+        return count;
     }
 
     /**
      * Computes if s is is 1 through 9 pandigital.
      *
-     * @param s string to be checked for pandigitality.
+     * @param n integer to be checked for pandigitality.
      * @return <true> if is 1 through 9 pandigital; <false> otherwise.
      */
-    private boolean isPandigital(String s) {
-        Set<Character> set = new HashSet<>();
-        for (int i = 1; i < 10; i++) {
-            set.add(Character.forDigit(i, 10));
+    private boolean isPandigital(int n) {
+        int digits = 0;
+        int count = 0;
+        int tmp;
+
+        for (; n > 0; n /= 10, count++) {
+            tmp = digits;
+            digits |= 1 << (n % 10) - 1;
+            if (tmp == digits) {
+                return false;
+            }
         }
-        for (int i = 0; i < s.length(); i++) {
-            set.remove(s.charAt(i));
-        }
-        return set.isEmpty();
+        return digits == (1 << count) - 1;
     }
 }
