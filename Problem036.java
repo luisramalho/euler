@@ -61,12 +61,14 @@ public class Problem036 {
      * @return  <true> if the string is a palindrome; <false> otherwise.
      */
     private static boolean isPalindrome(String str) {
-        int length = str.length();
-        for (int i = 0; i < length / 2; i++) {
-            if (str.charAt(i) != str.charAt(length - 1 - i)) {
-                return false;
-            }
+        if (str.length() == 0 || str.length() == 1) {
+            return true;
         }
-        return true;
+        
+        if (str.charAt(0) == str.charAt(str.length() - 1)) {
+            return isPalindrome(str.substring(1, str.length() - 1));
+        }
+
+        return false;
     }
 }
