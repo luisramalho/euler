@@ -29,16 +29,26 @@ package euler;
  * @author luisramalho
  */
 public class Problem041 {
+
+    /**
+     * Computes the largest n-digit pandigital prime.
+     *
+     * We start the search at 7654321 (instead of brute-force 987654321) due to
+     * the rule that if we sum all the digits in a number and that sum is
+     * divisible by 3, then the number itself is divisible by 3.
+     *
+     * @return the largest n-digit pandigital prime.
+     */
     public int solve() {
         int max = 0;
-        for (int i = 987654321; i > 0; i -= 2) {
+        for (int i = 7654321; i > 0; i -= 2) {
             if (isPandigital(i) && isPrime(i)) {
                 max = Math.max(max, i);
             }
         }
         return max;
     }
-    
+
     /**
      * Checks if a number is prime.
      *
@@ -84,7 +94,7 @@ public class Problem041 {
 
         return true;
     }
-    
+
     /**
      * Computes if s is is 1 through 9 pandigital.
      *
