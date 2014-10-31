@@ -26,6 +26,7 @@ package euler;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -41,21 +42,27 @@ import java.util.regex.Pattern;
 public class Problem042 {
 
     public int solve() {
-        int largestWordValue = getLargestWordValue();
-        Set<Integer> triangleNumbers = getTriangleValues(largestWordValue);
-
-        int wordValue, count = 0;
+        int wordValue;
+        int largestWordValue = 0;
+        ArrayList<Integer> wordValues = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("p042_words.txt"))) {
             Pattern p = Pattern.compile("\"([A-Z]+)\"");
             Matcher m = p.matcher(br.readLine());
             while (m.find()) {
                 wordValue = getWordValue(m.group(1));
-                if (triangleNumbers.contains(wordValue)) {
-                    count++;
-                }
+                wordValues.add(wordValue);
+                largestWordValue = Math.max(largestWordValue, wordValue);
             }
         } catch (IOException ex) {
             Logger.getLogger(Problem042.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        int count = 0;
+        Set<Integer> triangleNumbers = getTriangleValues(largestWordValue);
+        for (Integer wv : wordValues) {
+            if (triangleNumbers.contains(wv)) {
+                count++;
+            }
         }
 
         return count;
@@ -63,6 +70,7 @@ public class Problem042 {
 
     /**
      * Computes triangle values up to n.
+     *
      * @param n the limit
      * @return triangle values up to n
      */
@@ -74,21 +82,6 @@ public class Problem042 {
             i++;
         }
         return triangleNumbers;
-    }
-
-    /**
-     * Computes the word value of the largest word in a major dictionary.
-     * 
-     * Pneumonoultramicroscopicsilicovolcanoconiosis (45 characters)
-     *
-     * @return the word value of the largest word in a major dictionary
-     */
-    private int getLargestWordValue() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 45; i++) {
-            sb.append('Z');
-        }
-        return getWordValue(sb.toString());
     }
 
     /**
